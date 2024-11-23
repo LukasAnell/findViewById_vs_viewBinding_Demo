@@ -7,36 +7,32 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.findviewbyidvsviewbindingdemo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    lateinit var textViewMainCounter: TextView
-    lateinit var buttonMainIncrement: Button
+    private lateinit var binding: ActivityMainBinding
 
     var score: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.layout_main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        wireWidgets()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         setListeners()
     }
 
     private fun setListeners() {
-        buttonMainIncrement.setOnClickListener {
+        binding.buttonMainIncrement.setOnClickListener {
             score++
-            textViewMainCounter.text = "Score: $score"
+            binding.textViewMainCounter.text = "Score: $score"
         }
-    }
-
-    private fun wireWidgets() {
-        textViewMainCounter = findViewById(R.id.textView_main_counter)
-        buttonMainIncrement = findViewById(R.id.button_main_increment)
     }
 }
